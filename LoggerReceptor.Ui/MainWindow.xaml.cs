@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace LoggerReceptor.Ui
+﻿namespace LoggerReceptor.Ui
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
