@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityPosEventLogger", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerReceptor.Ui", "LoggerReceptor.Ui\LoggerReceptor.Ui.csproj", "{9DC0D93D-6F39-49C0-A1EB-F08C8B4320F0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{7AAA3066-51B4-4680-9D63-D06059FCE719}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\LasaActivity.dll = Lib\LasaActivity.dll
+		Lib\LasaFOHLib.dll = Lib\LasaFOHLib.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
