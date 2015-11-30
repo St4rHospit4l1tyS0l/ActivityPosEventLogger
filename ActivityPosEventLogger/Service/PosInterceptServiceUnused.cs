@@ -165,11 +165,6 @@ namespace ActivityPosEventLogger.Service
 
         }
 
-        public void InitializationComplete()
-        {
-
-        }
-
         public void Shutdown()
         {
 
@@ -351,11 +346,6 @@ namespace ActivityPosEventLogger.Service
         }
 
         public void ExitIberScreen(int iTermId, int iScreenId)
-        {
-
-        }
-
-        public void LogIn(int iEmployeeId, string sName)
         {
 
         }

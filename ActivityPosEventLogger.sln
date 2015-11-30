@@ -13,6 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{7AAA3066-51B
 		Lib\LasaFOHLib.dll = Lib\LasaFOHLib.dll
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ini", "Ini", "{32383884-ED98-45EF-A15D-8BBC3AAB292D}"
+	ProjectSection(SolutionItems) = preProject
+		Ini\PosEvent.ini = Ini\PosEvent.ini
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

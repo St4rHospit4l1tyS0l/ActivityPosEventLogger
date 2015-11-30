@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ActivityPosEventLogger</RootNamespace>
     <AssemblyName>ActivityPosEventLogger</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,13 +41,19 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Threading">
+      <HintPath>..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\GenericSerializer.cs" />
+    <Compile Include="Infrastructure\Logger.cs" />
+    <Compile Include="Infrastructure\DbReader.cs" />
     <Compile Include="Intercept\InterceptActivityProxy.cs" />
     <Compile Include="Intercept\InterceptActivityProxy17.cs" />
     <Compile Include="Intercept\InterceptActivityProxy18.cs" />
@@ -68,9 +75,24 @@
     <Compile Include="Intercept\InterceptActivityProxy11.cs" />
     <Compile Include="Intercept\InterceptActivityProxy19.cs" />
     <Compile Include="Intercept\InterceptActivityProxy20.cs" />
+    <Compile Include="Service\AlohaFunctionsService.cs" />
+    <Compile Include="Service\SenderInfoService.cs" />
+    <Compile Include="LogicLayer\SocketClient.cs" />
+    <Compile Include="Model\PosEvent.cs" />
+    <Compile Include="Model\ResponseMessage.cs" />
+    <Compile Include="LogicLayer\TcpServerSocket.cs" />
+    <Compile Include="Model\Constants.cs" />
+    <Compile Include="Model\Schema\XmlData.designer.cs" />
+    <Compile Include="Model\StateObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\PosInterceptServiceUnused.cs" />
     <Compile Include="Service\PosInterceptService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Model\Schema\XmlData.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
