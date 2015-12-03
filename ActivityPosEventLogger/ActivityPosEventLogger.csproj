@@ -77,7 +77,7 @@
     <Compile Include="Intercept\InterceptActivityProxy20.cs" />
     <Compile Include="Service\AlohaFunctionsService.cs" />
     <Compile Include="Service\SenderInfoService.cs" />
-    <Compile Include="LogicLayer\SocketClient.cs" />
+    <Compile Include="LogicLayer\TcpClientSocket.cs" />
     <Compile Include="Model\PosEvent.cs" />
     <Compile Include="Model\ResponseMessage.cs" />
     <Compile Include="LogicLayer\TcpServerSocket.cs" />

@@ -12,11 +12,6 @@ namespace ActivityPosEventLogger.Service
         {
         }
 
-        public void LogOut(int iEmployeeId, string sName)
-        {
-
-        }
-
         public void ClockIn(int iEmployeeId, string sEmpName, int iJobcodeId, string sJobName)
         {
 
@@ -32,16 +27,6 @@ namespace ActivityPosEventLogger.Service
         }
 
         public void CloseTable(int iemployeeId, int iqueueId, int itableId)
-        {
-
-        }
-
-        public void OpenCheck(int iemployeeId, int iqueueId, int itableId, int icheckId)
-        {
-
-        }
-
-        public void CloseCheck(int iemployeeId, int iqueueId, int itableId, int icheckId)
         {
 
         }
@@ -78,11 +63,6 @@ namespace ActivityPosEventLogger.Service
         public void Bump(int iTableId)
         {
 
-        }
-
-        public void AddItem(int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iEntryId)
-        {
-            //MessageBox.Show("AddItem(): Estamos enviando los items agregados AddItem10: " + iEntryId);
         }
 
         public void ModifyItem(int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iEntryId)

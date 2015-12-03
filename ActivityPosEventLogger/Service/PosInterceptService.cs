@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using ActivityPosEventLogger.Infrastructure;
 using ActivityPosEventLogger.Model;
@@ -42,13 +43,56 @@ namespace ActivityPosEventLogger.Service
             }
 
             SenderInfoService.InitializeSocket(DbReader.Ip, DbReader.Port);
+            Logger.Write("Se ha iniciado de forma correcta la interfaz de eventos");
         }
 
         
         public void LogIn(int iEmployeeId, string sName)
         {
-            var posEvent = new PosEvent("Login", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId));
-            SenderInfoService.SendInfoToTcpSocket(posEvent);
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("Login", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);                
+            });
         }
+
+
+        public void LogOut(int iEmployeeId, string sName)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("LogOut", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
+
+
+        public void OpenCheck(int iEmployeeId, int iQueueId, int iTableId, int iCheckId)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("OpenCheck", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
+
+        public void CloseCheck(int iEmployeeId, int iQueueId, int iTableId, int iCheckId)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("CloseCheck", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
+
+        public void AddItem(int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iEntryId)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("AddItem", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetItemInfo(iCheckId, iEntryId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
+  
     }
 }

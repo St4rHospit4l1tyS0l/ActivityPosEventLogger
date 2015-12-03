@@ -1,6 +1,7 @@
 ﻿<Window x:Class="LoggerReceptor.Ui.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:behaviour="clr-namespace:LoggerReceptor.Ui.Behaviour"
         Title="Emulador Camera" Height="600" Width="800" WindowStartupLocation="CenterScreen" Closing="Window_Closing" >
     <Grid>
         <Grid.RowDefinitions>
@@ -8,7 +9,7 @@
             <RowDefinition Height="146*"/>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Row="1"  Name="LstLogs" Foreground="White" Background="Black" ScrollViewer.VerticalScrollBarVisibility="Visible" >
+        <ListBox Grid.Row="1"  Name="LstLogs" behaviour:ListBoxBehaviour.AutoCopy="True" Foreground="White" Background="Black" ScrollViewer.VerticalScrollBarVisibility="Visible" >
         </ListBox>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
