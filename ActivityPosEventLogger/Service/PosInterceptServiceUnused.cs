@@ -65,72 +65,12 @@ namespace ActivityPosEventLogger.Service
 
         }
 
-        public void ModifyItem(int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iEntryId)
-        {
-
-        }
-
-        public void OrderItems(int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iModeId)
-        {
-
-        }
-
         public void HoldItems(int iEmployeeId, int iQueueId, int iTableId, int iCheckId)
         {
 
         }
 
-        public void OpenItem(int iEmployeeId, int iEntryId, int iItemId, string sDescription, double dPrice)
-        {
-
-        }
-
-        public void SpecialMessage(int iEmployeeId, int iMessageId, string sMessage)
-        {
-
-        }
-
-        public void DeleteItems(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iReasonId)
-        {
-
-        }
-
         public void UpdateItems(int iEmployeeId, int iQueueId, int iTableId, int iCheckId)
-        {
-
-        }
-
-        public void ApplyPayment(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iTenderId, int iPaymentId)
-        {
-
-        }
-
-        public void AdjustPayment(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iTenderId, int iPaymentId)
-        {
-
-        }
-
-        public void DeletePayment(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iTenderId, int iPaymentId)
-        {
-
-        }
-
-        public void ApplyComp(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iCompTypeId, int iCompId)
-        {
-
-        }
-
-        public void DeleteComp(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iCompTypeId, int iCompId)
-        {
-
-        }
-
-        public void ApplyPromo(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iPromotionId, int iPromoId)
-        {
-
-        }
-
-        public void DeletePromo(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iPromotionId, int iPromoId)
         {
 
         }
@@ -201,11 +141,6 @@ namespace ActivityPosEventLogger.Service
         }
 
         public void StartAddItem(int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iEntryId, int iParentEntryId, int iModCodeId, int iItemId, string sItemName, double dItemPrice)
-        {
-
-        }
-
-        public void CancelAddItem(int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iEntryId)
         {
 
         }

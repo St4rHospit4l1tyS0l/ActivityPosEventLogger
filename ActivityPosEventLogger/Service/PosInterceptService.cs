@@ -93,6 +93,118 @@ namespace ActivityPosEventLogger.Service
                 SenderInfoService.SendInfoToTcpSocket(posEvent);
             });
         }
-  
+
+
+        public void CancelAddItem(int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iEntryId)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("CancelAddItem", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetItemInfo(iCheckId, iEntryId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
+
+
+        public void ModifyItem(int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iEntryId)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("ModifyItem", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetItemInfo(iCheckId, iEntryId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
+
+        public void OrderItems(int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iModeId)
+        {
+
+        }
+
+        public void OpenItem(int iEmployeeId, int iEntryId, int iItemId, string sDescription, double dPrice)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("OpenItem", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), new PosEventItem{Id = iItemId, Name = sDescription, Price = dPrice});
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
+
+        public void SpecialMessage(int iEmployeeId, int iMessageId, string sMessage)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("SpecialMessage", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), sMessage);
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
+
+        public void DeleteItems(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iReasonId)
+        {
+                
+        }
+
+        public void ApplyPayment(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iTenderId, int iPaymentId)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("ApplyPayment", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetPayment(iCheckId, iTenderId, iPaymentId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
+
+        public void AdjustPayment(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iTenderId, int iPaymentId)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("AdjustPayment", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetPayment(iCheckId, iTenderId, iPaymentId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
+
+        public void DeletePayment(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iTenderId, int iPaymentId)
+        {
+
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("DeletePayment", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetPayment(iCheckId, iTenderId, iPaymentId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
+
+        public void ApplyComp(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iCompTypeId, int iCompId)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("ApplyComp", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetComp(iCompTypeId, iCompId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+
+        }
+
+        public void DeleteComp(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iCompTypeId, int iCompId)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("DeleteComp", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetComp(iCompTypeId, iCompId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
+
+        public void ApplyPromo(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iPromotionId, int iPromoId)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("ApplyPromo", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetPromo(iPromotionId, iPromoId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
+
+        public void DeletePromo(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iPromotionId, int iPromoId)
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                var posEvent = new PosEvent("DeletePromo", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetPromo(iPromotionId, iPromoId));
+                SenderInfoService.SendInfoToTcpSocket(posEvent);
+            });
+        }
     }
 }
