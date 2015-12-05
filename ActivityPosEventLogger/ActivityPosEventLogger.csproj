@@ -31,9 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LasaActivity">
-      <HintPath>..\Lib\LasaActivity.dll</HintPath>
+    <Reference Include="LasaActivity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\Lib\LasaActivity.dll</HintPath>
     </Reference>
     <Reference Include="LasaFOHLib">
       <HintPath>..\Lib\LasaFOHLib.dll</HintPath>

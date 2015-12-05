@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{7AAA3066-51B
 	ProjectSection(SolutionItems) = preProject
 		Lib\LasaActivity.dll = Lib\LasaActivity.dll
 		Lib\LasaFOHLib.dll = Lib\LasaFOHLib.dll
+		Lib\LasaIntAct.dll = Lib\LasaIntAct.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ini", "Ini", "{32383884-ED98-45EF-A15D-8BBC3AAB292D}"
