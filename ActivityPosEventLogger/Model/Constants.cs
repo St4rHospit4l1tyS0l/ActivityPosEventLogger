@@ -11,6 +11,7 @@
 
         public const int INTERNAL_LOCALSTATE = 720;
         public const int INTERNAL_LOCALSTATE_CUR_EMP = 723;
+        public const int INTERNAL_LOCALSTATE_ITEMINFOS = 731;
 
         public const int INTERNAL_CHECKS = 540;
         public const int INTERNAL_CHECKS_ENTRIES = 542;

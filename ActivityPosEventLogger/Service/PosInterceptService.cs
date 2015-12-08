@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ActivityPosEventLogger.Infrastructure;
 using ActivityPosEventLogger.Model;
+using LasaFOHLib;
 
 namespace ActivityPosEventLogger.Service
 {
@@ -139,7 +140,18 @@ namespace ActivityPosEventLogger.Service
 
         public void DeleteItems(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iReasonId)
         {
-                
+            try
+            {
+                IIberObject localState = AlohaFunctionsService.GetLocalState();
+                foreach (IIberObject item in localState.GetEnum(Constants.INTERNAL_LOCALSTATE_ITEMINFOS))
+                {
+                    Console.WriteLine(item.GetStringVal("ID"));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Exception(ex);
+            }    
         }
 
         public void ApplyPayment(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iTenderId, int iPaymentId)
@@ -162,7 +174,7 @@ namespace ActivityPosEventLogger.Service
 
         public void DeletePayment(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iTenderId, int iPaymentId)
         {
-
+            
             new TaskFactory().StartNew(() =>
             {
                 var posEvent = new PosEvent("DeletePayment", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetPayment(iCheckId, iTenderId, iPaymentId));

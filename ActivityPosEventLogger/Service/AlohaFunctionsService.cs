@@ -21,7 +21,7 @@ namespace ActivityPosEventLogger.Service
             }
         }
 
-        private static IberObject GetLocalState()
+        public static IberObject GetLocalState()
         {
             IberDepot depot = new IberDepotClass();
             return depot.GetEnum(Constants.INTERNAL_LOCALSTATE).First();
