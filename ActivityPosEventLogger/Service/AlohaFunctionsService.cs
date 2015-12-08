@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using ActivityPosEventLogger.Infrastructure;
 using ActivityPosEventLogger.Model;
 using LasaFOHLib;
@@ -194,6 +196,59 @@ namespace ActivityPosEventLogger.Service
             }
 
             return PosEvent.GetPromotionNotFound();
+        }
+
+        public List<PosEventDeletedItems> GetLstItemsDeleted()
+        {
+            var lstDeletedItems = new List<PosEventDeletedItems>();
+            IIberObject localState = GetLocalState();
+            foreach (IIberObject item in localState.GetEnum(Constants.INTERNAL_LOCALSTATE_ITEMINFOS))
+            {
+                lstDeletedItems.Add(
+                new PosEventDeletedItems{
+                    Id = item.GetLongVal("DATA"),
+                    Price = item.GetDoubleVal("PRICE")
+                });
+            }
+
+            return lstDeletedItems;
+        }
+
+        public void FillNameByCheckId(int iCheckId, List<PosEventDeletedItems> lstItemsDeleted)
+        {
+            try
+            {
+                foreach (IIberObject chkObject in new IberDepot().FindObjectFromId(Constants.INTERNAL_CHECKS, iCheckId))
+                {
+                    foreach (IIberObject objItem in chkObject.GetEnum(Constants.INTERNAL_CHECKS_ENTRIES))
+                    {
+                        try
+                        {
+                            var itemId = objItem.GetLongVal("DATA");
+
+                            var lstItems = lstItemsDeleted.Where(e => e.Id == itemId).ToList();
+
+                            if (lstItems.Any() == false)
+                                continue;
+
+                            var name = objItem.GetStringVal("DISP_NAME");
+
+                            foreach (var item in lstItems)
+                            {
+                                item.Name = name;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Exception(ex);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Exception(ex);
+            }
         }
     }
 }
