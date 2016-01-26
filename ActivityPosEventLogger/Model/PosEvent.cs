@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ActivityPosEventLogger.Model;
 
 namespace ActivityPosEventLogger
@@ -42,6 +43,16 @@ namespace ActivityPosEventLogger
             : this(eventName, terminalId, employee)
         {
             Promo = promo;
+        }
+
+        public PosEvent(string eventName, int terminalId, PosEventEmployee employee, List<PosEventDeletedItems> lstItemsDeleted, int iReasonId)
+            : this(eventName, terminalId, employee)
+        {
+            Deleted = new PosEventDeleted
+            {
+                Items = lstItemsDeleted,
+                ReasonId = iReasonId
+            };
         }
 
 

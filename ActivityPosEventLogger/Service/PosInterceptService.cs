@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ActivityPosEventLogger.Infrastructure;
@@ -142,11 +143,18 @@ namespace ActivityPosEventLogger.Service
         {
             try
             {
-                IIberObject localState = AlohaFunctionsService.GetLocalState();
-                foreach (IIberObject item in localState.GetEnum(Constants.INTERNAL_LOCALSTATE_ITEMINFOS))
+                //Se tiene que realizar de forma secuencial debido a que la información es eliminada después de terminar este evento
+                var lstItemsDeleted = _alohaFunctions.GetLstItemsDeleted();
+
+                if(lstItemsDeleted.Any())
+                    _alohaFunctions.FillNameByCheckId(iCheckId, lstItemsDeleted);
+                
+                new TaskFactory().StartNew(() =>
                 {
-                    Console.WriteLine(item.GetStringVal("ID"));
-                }
+                    var posEvent = new PosEvent("DeleteItems", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), lstItemsDeleted, iReasonId);
+                    SenderInfoService.SendInfoToTcpSocket(posEvent);
+                });
+
             }
             catch (Exception ex)
             {

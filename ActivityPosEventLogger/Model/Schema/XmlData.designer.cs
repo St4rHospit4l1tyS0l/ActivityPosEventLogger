@@ -30,6 +30,8 @@ namespace ActivityPosEventLogger
 
         private PosEventItem itemField;
 
+        private PosEventDeleted deletedField;
+
         private PosEventPayment paymentField;
 
         private PosEventComp compField;
@@ -41,6 +43,7 @@ namespace ActivityPosEventLogger
             this.promoField = new PosEventPromo();
             this.compField = new PosEventComp();
             this.paymentField = new PosEventPayment();
+            this.deletedField = new PosEventDeleted();
             this.itemField = new PosEventItem();
             this.employeeField = new PosEventEmployee();
         }
@@ -114,6 +117,18 @@ namespace ActivityPosEventLogger
             set
             {
                 this.itemField = value;
+            }
+        }
+
+        public PosEventDeleted Deleted
+        {
+            get
+            {
+                return this.deletedField;
+            }
+            set
+            {
+                this.deletedField = value;
             }
         }
 
@@ -201,6 +216,89 @@ namespace ActivityPosEventLogger
     }
 
     public partial class PosEventItem
+    {
+
+        private long idField;
+
+        private string nameField;
+
+        private double priceField;
+
+        public long Id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
+            }
+        }
+
+        public double Price
+        {
+            get
+            {
+                return this.priceField;
+            }
+            set
+            {
+                this.priceField = value;
+            }
+        }
+    }
+
+    public partial class PosEventDeleted
+    {
+
+        private List<PosEventDeletedItems> itemsField;
+
+        private int reasonIdField;
+
+        public PosEventDeleted()
+        {
+            this.itemsField = new List<PosEventDeletedItems>();
+        }
+
+        public List<PosEventDeletedItems> Items
+        {
+            get
+            {
+                return this.itemsField;
+            }
+            set
+            {
+                this.itemsField = value;
+            }
+        }
+
+        public int ReasonId
+        {
+            get
+            {
+                return this.reasonIdField;
+            }
+            set
+            {
+                this.reasonIdField = value;
+            }
+        }
+    }
+
+    public partial class PosEventDeletedItems
     {
 
         private long idField;
