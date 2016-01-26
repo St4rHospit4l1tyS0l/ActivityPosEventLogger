@@ -2,7 +2,7 @@
 {
     class Constants
     {
-        public const string FILE_NAME_CONFIG = "PosEvent.ini";
+        public const string FILE_NAME_CONFIG = "C:\\Config\\PosEvent.ini";
         public const string PATH_FILE_LOGGER = "ArchivoLog";
 
 
