@@ -9,7 +9,7 @@ namespace ActivityPosEventLogger.Infrastructure
     public static class Logger
     {
         private const string FILE_PATH = "PosInterceptService.log";
-        private static object _lock = new object();
+        private static readonly object Lock = new object();
 
         private static string FilePath
         {
@@ -26,9 +26,9 @@ namespace ActivityPosEventLogger.Infrastructure
         {
             try
             {
-                lock (_lock)
+                lock (Lock)
                 {
-                    using (var sr = new StreamWriter(FilePath))
+                    using (var sr = new StreamWriter(FilePath, true))
                     {
                         sr.Write(String.Format("{0} - {1}", DateTime.Now.ToString("G"), sMsg) + Environment.NewLine);
                     }
@@ -44,9 +44,9 @@ namespace ActivityPosEventLogger.Infrastructure
         {
             try
             {
-                lock (_lock)
+                lock (Lock)
                 {
-                    using (var sr = new StreamWriter(FilePath))
+                    using (var sr = new StreamWriter(FilePath, true))
                     {
                         sr.Write(String.Format("{0} - Error: {1} -ST- {2}", DateTime.Now.ToString("G"), ex.Message, ex.StackTrace) + Environment.NewLine);
                     }

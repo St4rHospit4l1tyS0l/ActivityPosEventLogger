@@ -1,11 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ActivityPosEventLogger.Infrastructure;
 using ActivityPosEventLogger.Model;
-using LasaFOHLib;
 
 namespace ActivityPosEventLogger.Service
 {
@@ -35,11 +33,12 @@ namespace ActivityPosEventLogger.Service
 
         public void InitializationComplete()
         {
-            var fileName = Path.Combine(Environment.CurrentDirectory, Constants.FILE_NAME_CONFIG);
+            Logger.Write("Leyendo el archivo: " + Constants.FILE_NAME_CONFIG);
+            Logger.Write("Iniciando los servicios");
 
-            if (DbReader.ReadDictionaryFromFile(fileName) == false)
+            if (DbReader.ReadDictionaryFromFile(Constants.FILE_NAME_CONFIG) == false)
             {
-                var msg = String.Format("No existe el archivo de configuración {0} o no se pudo leer de forma correcta", fileName);
+                var msg = String.Format("No existe el archivo de configuración {0} o no se pudo leer de forma correcta", Constants.FILE_NAME_CONFIG);
                 Logger.Write(msg);
                 MessageBox.Show(msg);
             }
@@ -51,6 +50,7 @@ namespace ActivityPosEventLogger.Service
         
         public void LogIn(int iEmployeeId, string sName)
         {
+            Logger.Write("LogIn entrar");
             new TaskFactory().StartNew(() =>
             {
                 var posEvent = new PosEvent("Login", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId));
@@ -61,6 +61,7 @@ namespace ActivityPosEventLogger.Service
 
         public void LogOut(int iEmployeeId, string sName)
         {
+            Logger.Write("LogIn salir");
             new TaskFactory().StartNew(() =>
             {
                 var posEvent = new PosEvent("LogOut", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId));
