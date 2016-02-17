@@ -61,12 +61,16 @@ namespace ActivityPosEventLogger.Service
 
         public void LogOut(int iEmployeeId, string sName)
         {
-            Logger.Write("LogIn salir");
-            new TaskFactory().StartNew(() =>
+            try
             {
+                Logger.Write("LogIn salir");
                 var posEvent = new PosEvent("LogOut", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId));
-                SenderInfoService.SendInfoToTcpSocket(posEvent);
-            });
+                new TaskFactory().StartNew(() => SenderInfoService.SendInfoToTcpSocket(posEvent));
+            }
+            catch (Exception ex)
+            {
+                Logger.Exception(ex);
+            }
         }
 
 
@@ -165,11 +169,15 @@ namespace ActivityPosEventLogger.Service
 
         public void ApplyPayment(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iTenderId, int iPaymentId)
         {
-            new TaskFactory().StartNew(() =>
+            try
             {
                 var posEvent = new PosEvent("ApplyPayment", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetPayment(iCheckId, iTenderId, iPaymentId));
-                SenderInfoService.SendInfoToTcpSocket(posEvent);
-            });
+                new TaskFactory().StartNew(() => SenderInfoService.SendInfoToTcpSocket(posEvent));
+            }
+            catch (Exception ex)
+            {
+                Logger.Exception(ex);
+            }
         }
 
         public void AdjustPayment(int iManagerId, int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iTenderId, int iPaymentId)
