@@ -14,7 +14,7 @@ namespace ActivityPosEventLogger
             Date = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
         }
 
-        public PosEvent(string eventName, int terminalId, PosEventEmployee employee, PosEventItem item)
+        public PosEvent(string eventName, int terminalId, PosEventEmployee employee, List<PosEventItem> item)
             : this(eventName, terminalId, employee)
         {
             Item = item;
@@ -67,13 +67,16 @@ namespace ActivityPosEventLogger
         }
 
 
-        public static PosEventItem GetItemNotFound()
+        public static List<PosEventItem> GetItemNotFound()
         {
-            return new PosEventItem
+            return new List<PosEventItem>
             {
-                Name = "No encontrado",
-                Price = 0.0,
-                Id = Constants.ID_NULL
+                new PosEventItem
+                {
+                    Name = "No encontrado",
+                    Price = 0.0,
+                    Id = Constants.ID_NULL
+                }
             };
         }
 

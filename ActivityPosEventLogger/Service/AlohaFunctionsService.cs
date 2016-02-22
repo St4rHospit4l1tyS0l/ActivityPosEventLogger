@@ -111,7 +111,7 @@ namespace ActivityPosEventLogger.Service
         }
 
 
-        public PosEventItem GetItemInfo(int iCheckId, int iEntryId)
+        public List<PosEventItem> GetItemInfo(int iCheckId, int iEntryId)
         {
             try
             {
@@ -124,11 +124,14 @@ namespace ActivityPosEventLogger.Service
                             var idEntry = objItem.GetLongVal("ID");
                             if (idEntry == iEntryId)
                             {
-                                return new PosEventItem
+                                return new List<PosEventItem>
                                 {
-                                    Id = objItem.GetLongVal("DATA"),
-                                    Name = objItem.GetStringVal("DISP_NAME"),
-                                    Price = objItem.GetDoubleVal("PRICE")
+                                    new PosEventItem
+                                    {
+                                        Id = objItem.GetLongVal("DATA"),
+                                        Name = objItem.GetStringVal("DISP_NAME"),
+                                        Price = objItem.GetDoubleVal("PRICE")
+                                    }
                                 };
                             }
                         }
@@ -205,7 +208,8 @@ namespace ActivityPosEventLogger.Service
             foreach (IIberObject item in localState.GetEnum(Constants.INTERNAL_LOCALSTATE_ITEMINFOS))
             {
                 lstDeletedItems.Add(
-                new PosEventDeletedItems{
+                new PosEventDeletedItems
+                {
                     Id = item.GetLongVal("DATA"),
                     Price = item.GetDoubleVal("PRICE")
                 });
@@ -214,7 +218,7 @@ namespace ActivityPosEventLogger.Service
             return lstDeletedItems;
         }
 
-        public void FillNameByCheckId(int iCheckId, List<PosEventDeletedItems> lstItemsDeleted)
+        public void FillNameByCheckId(int iCheckId, List<PosEventDeletedItems> lstPosItems)
         {
             try
             {
@@ -226,14 +230,14 @@ namespace ActivityPosEventLogger.Service
                         {
                             var itemId = objItem.GetLongVal("DATA");
 
-                            var lstItems = lstItemsDeleted.Where(e => e.Id == itemId).ToList();
+                            var lstMatchItems = lstPosItems.Where(e => e.Id == itemId).ToList();
 
-                            if (lstItems.Any() == false)
+                            if (lstMatchItems.Any() == false)
                                 continue;
 
                             var name = objItem.GetStringVal("DISP_NAME");
 
-                            foreach (var item in lstItems)
+                            foreach (var item in lstMatchItems)
                             {
                                 item.Name = name;
                             }
@@ -249,6 +253,56 @@ namespace ActivityPosEventLogger.Service
             {
                 Logger.Exception(ex);
             }
+        }
+
+        public List<PosEventItem> GetItemInfos(int iCheckId, int iEntryId)
+        {
+            var lstPosItems = new List<PosEventItem>();
+            IIberObject localState = GetLocalState();
+            foreach (IIberObject item in localState.GetEnum(Constants.INTERNAL_LOCALSTATE_ITEMINFOS))
+            {
+                lstPosItems.Add(new PosEventItem
+                {
+                    Id = item.GetLongVal("DATA"),
+                    Price = item.GetDoubleVal("PRICE")
+                });
+            }
+
+            try
+            {
+                foreach (IIberObject chkObject in new IberDepot().FindObjectFromId(Constants.INTERNAL_CHECKS, iCheckId))
+                {
+                    foreach (IIberObject objItem in chkObject.GetEnum(Constants.INTERNAL_CHECKS_ENTRIES))
+                    {
+                        try
+                        {
+                            var itemId = objItem.GetLongVal("DATA");
+
+                            var lstMatchItems = lstPosItems.Where(e => e.Id == itemId).ToList();
+
+                            if (lstMatchItems.Any() == false)
+                                continue;
+
+                            var name = objItem.GetStringVal("DISP_NAME");
+
+                            foreach (var item in lstMatchItems)
+                            {
+                                item.Name = name;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Exception(ex);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Exception(ex);
+            }
+
+            return lstPosItems;
         }
     }
 }

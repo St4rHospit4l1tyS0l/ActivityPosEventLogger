@@ -28,7 +28,7 @@ namespace ActivityPosEventLogger
 
         private PosEventEmployee employeeField;
 
-        private PosEventItem itemField;
+        private List<PosEventItem> itemField;
 
         private PosEventDeleted deletedField;
 
@@ -44,7 +44,7 @@ namespace ActivityPosEventLogger
             this.compField = new PosEventComp();
             this.paymentField = new PosEventPayment();
             this.deletedField = new PosEventDeleted();
-            this.itemField = new PosEventItem();
+            this.itemField = new List<PosEventItem>();
             this.employeeField = new PosEventEmployee();
         }
 
@@ -108,7 +108,7 @@ namespace ActivityPosEventLogger
             }
         }
 
-        public PosEventItem Item
+        public List<PosEventItem> Item
         {
             get
             {

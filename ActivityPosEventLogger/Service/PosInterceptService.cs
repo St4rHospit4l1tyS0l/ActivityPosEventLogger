@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -64,7 +65,12 @@ namespace ActivityPosEventLogger.Service
             try
             {
                 Logger.Write("LogIn salir");
-                var posEvent = new PosEvent("LogOut", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId));
+                var posEvent = new PosEvent("LogOut", TerminalId, new PosEventEmployee
+                {
+                    FirstName = sName,
+                    Id = iEmployeeId,
+                    LastName = String.Empty
+                });
                 new TaskFactory().StartNew(() => SenderInfoService.SendInfoToTcpSocket(posEvent));
             }
             catch (Exception ex)
@@ -94,11 +100,15 @@ namespace ActivityPosEventLogger.Service
 
         public void AddItem(int iEmployeeId, int iQueueId, int iTableId, int iCheckId, int iEntryId)
         {
-            new TaskFactory().StartNew(() =>
+            try
             {
-                var posEvent = new PosEvent("AddItem", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetItemInfo(iCheckId, iEntryId));
-                SenderInfoService.SendInfoToTcpSocket(posEvent);
-            });
+                var posEvent = new PosEvent("AddItem", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), _alohaFunctions.GetItemInfos(iCheckId, iEntryId));
+                new TaskFactory().StartNew(() => SenderInfoService.SendInfoToTcpSocket(posEvent));
+            }
+            catch (Exception ex)
+            {
+                Logger.Exception(ex);
+            }
         }
 
 
@@ -130,7 +140,14 @@ namespace ActivityPosEventLogger.Service
         {
             new TaskFactory().StartNew(() =>
             {
-                var posEvent = new PosEvent("OpenItem", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), new PosEventItem{Id = iItemId, Name = sDescription, Price = dPrice});
+                var posEvent = new PosEvent("OpenItem", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), 
+                    new List<PosEventItem>
+                    {
+                        new PosEventItem
+                        {
+                            Id = iItemId, Name = sDescription, Price = dPrice
+                        }
+                    });
                 SenderInfoService.SendInfoToTcpSocket(posEvent);
             });
         }
@@ -159,7 +176,6 @@ namespace ActivityPosEventLogger.Service
                     var posEvent = new PosEvent("DeleteItems", TerminalId, _alohaFunctions.GetEmployee(iEmployeeId), lstItemsDeleted, iReasonId);
                     SenderInfoService.SendInfoToTcpSocket(posEvent);
                 });
-
             }
             catch (Exception ex)
             {
