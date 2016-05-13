@@ -268,6 +268,56 @@ namespace ActivityPosEventLogger.Service
                 });
             }
 
+            //Logger.Write(String.Format("Número de items encontrados: {0}", lstPosItems.Count));
+
+            if (lstPosItems.Count == 0)
+            {
+                try
+                {
+                    foreach (IIberObject item in localState.GetEnum(Constants.INTERNAL_LOCALSTATE_CUR_ENTRY))
+                    {
+                        try
+                        {
+                            long id = item.GetLongVal("DATA");
+
+                            if (id > 0)
+                            {
+                                lstPosItems.Add(new PosEventItem
+                                {
+                                    Id = id,
+                                    Price = item.GetDoubleVal("PRICE")
+                                });
+                            }
+
+                            //try
+                            //{
+                            //    Logger.Write(String.Format("CURR ENTRY ID: {0}", item.GetLongVal("ID")));
+                            //}
+                            //catch (Exception ex) { Logger.Exception(ex); } 
+                            //try
+                            //{
+                            //    Logger.Write(String.Format("CURR ENTRY DATA: {0}", item.GetLongVal("DATA")));
+                            //}
+                            //catch (Exception ex) { Logger.Exception(ex); } 
+                            //try
+                            //{
+                            //    Logger.Write(String.Format("CURR ENTRY TYPE: {0}", item.GetLongVal("TYPE")));
+                            //}
+                            //catch (Exception ex) { Logger.Exception(ex); }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Exception(ex);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Exception(ex);
+                }
+
+            }
+
             try
             {
                 foreach (IIberObject chkObject in new IberDepot().FindObjectFromId(Constants.INTERNAL_CHECKS, iCheckId))
